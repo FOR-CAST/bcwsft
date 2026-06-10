@@ -88,8 +88,12 @@ bcwsft_pct_conifer <- function(s) {
   for (i in 1:6) {
     cd <- s[[paste0("SPECIES_CD_", i)]]
     pct <- s[[paste0("SPECIES_PCT_", i)]]
-    if (!.is_missing(cd) && is.numeric(pct) && !is.na(pct) &&
-      as.character(cd) %in% bcwsft_conifer_list) {
+    if (
+      !.is_missing(cd) &&
+        is.numeric(pct) &&
+        !is.na(pct) &&
+        as.character(cd) %in% bcwsft_conifer_list
+    ) {
       total <- total + pct
     }
   }
@@ -106,15 +110,7 @@ bcwsft_dry_wet <- function(s) {
     return("Invalid Subzone")
   }
   first <- substr(as.character(sz), 1L, 1L)
-  switch(first,
-    d = ,
-    x = "dry",
-    m = ,
-    w = ,
-    v = "wet",
-    u = "undifferentiated",
-    "Invalid Subzone"
-  )
+  switch(first, d = , x = "dry", m = , w = , v = "wet", u = "undifferentiated", "Invalid Subzone")
 }
 
 #' Total live + dead stems per ha (getStocking, L344-359)
@@ -137,14 +133,22 @@ bcwsft_stocking <- function(s) {
 #' @return logical scalar.
 #' @export
 bcwsft_check_dom_conifers <- function(s, check_list) {
-  codes <- vapply(1:6, function(i) {
-    cd <- s[[paste0("SPECIES_CD_", i)]]
-    if (.is_missing(cd)) NA_character_ else as.character(cd)
-  }, character(1))
-  pct <- vapply(1:6, function(i) {
-    p <- s[[paste0("SPECIES_PCT_", i)]]
-    if (.is_missing(p)) NA_real_ else as.numeric(p)
-  }, numeric(1))
+  codes <- vapply(
+    1:6,
+    function(i) {
+      cd <- s[[paste0("SPECIES_CD_", i)]]
+      if (.is_missing(cd)) NA_character_ else as.character(cd)
+    },
+    character(1)
+  )
+  pct <- vapply(
+    1:6,
+    function(i) {
+      p <- s[[paste0("SPECIES_PCT_", i)]]
+      if (.is_missing(p)) NA_real_ else as.numeric(p)
+    },
+    numeric(1)
+  )
 
   in_check <- which(!is.na(codes) & codes %in% check_list)
   cnfr_pct <- if (length(in_check) == 0L) 0 else max(pct[in_check], na.rm = TRUE)

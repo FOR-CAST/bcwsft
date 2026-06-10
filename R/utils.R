@@ -22,7 +22,9 @@
 ## Extract a 4-digit calendar year from a Date, POSIXt, or string.
 ## Mirrors the Python handling of timezone-suffixed date strings (`split('+')`).
 .year_of <- function(x) {
-  if (.is_missing(x)) return(NA_integer_)
+  if (.is_missing(x)) {
+    return(NA_integer_)
+  }
   if (inherits(x, "Date") || inherits(x, "POSIXt")) {
     return(as.integer(format(x, "%Y")))
   }

@@ -12,8 +12,11 @@
 #'   (defaults to the current calendar year). Pin it for reproducible results.
 #' @return a list with `branch`, `fuel_type`, and `ft_modifier`.
 #' @export
-bcwsft_fuel_type_one <- function(record, season = c("growing", "dormant"),
-                                 current_year = .this_year()) {
+bcwsft_fuel_type_one <- function(
+  record,
+  season = c("growing", "dormant"),
+  current_year = .this_year()
+) {
   season <- match.arg(season)
   s <- as.list(record)
   s$season <- season
@@ -47,9 +50,12 @@ bcwsft_fuel_type_one <- function(record, season = c("growing", "dormant"),
 #' @return a data frame with columns `branch`, `fuel_type`, `ft_modifier`,
 #'   one row per input row.
 #' @export
-bcwsft_fuel_type <- function(data, season = c("growing", "dormant"),
-                             current_year = .this_year(),
-                             on_error = c("error", "na")) {
+bcwsft_fuel_type <- function(
+  data,
+  season = c("growing", "dormant"),
+  current_year = .this_year(),
+  on_error = c("error", "na")
+) {
   season <- match.arg(season)
   on_error <- match.arg(on_error)
   stopifnot(is.data.frame(data))
@@ -57,8 +63,10 @@ bcwsft_fuel_type <- function(data, season = c("growing", "dormant"),
   missing_cols <- setdiff(bcwsft_input_columns, names(data))
   if (length(missing_cols)) {
     warning(
-      "bcwsft_fuel_type(): input is missing ", length(missing_cols),
-      " expected column(s): ", paste(missing_cols, collapse = ", "),
+      "bcwsft_fuel_type(): input is missing ",
+      length(missing_cols),
+      " expected column(s): ",
+      paste(missing_cols, collapse = ", "),
       call. = FALSE
     )
   }
@@ -69,8 +77,11 @@ bcwsft_fuel_type <- function(data, season = c("growing", "dormant"),
       bcwsft_fuel_type_one(rec, season = season, current_year = current_year),
       error = function(e) {
         if (on_error == "na") {
-          list(branch = paste0("error: ", conditionMessage(e)),
-               fuel_type = NA_character_, ft_modifier = NA_real_)
+          list(
+            branch = paste0("error: ", conditionMessage(e)),
+            fuel_type = NA_character_,
+            ft_modifier = NA_real_
+          )
         } else {
           stop(e)
         }

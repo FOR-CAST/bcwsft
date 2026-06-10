@@ -76,7 +76,9 @@ bcwsft_decision_tree <- function(s) {
           } else {
             return(.ft("NV/logged/harv>24/parkland/growing", "D-2"))
           }
-        } else if (.in_set(s$BEC_ZONE_CODE, c("CWH", "CDF", "ICH")) && identical(s$dry_wet, "wet")) {
+        } else if (
+          .in_set(s$BEC_ZONE_CODE, c("CWH", "CDF", "ICH")) && identical(s$dry_wet, "wet")
+        ) {
           return(.ft("NV/logged/harv>24/wetbelt-wet", "C-5"))
         } else if (.in_set(s$BEC_ZONE_CODE, "BWBS")) {
           return(.ft("NV/logged/harv>24/bwbs", "C-2"))
@@ -86,12 +88,16 @@ bcwsft_decision_tree <- function(s) {
           } else {
             return(.ft("NV/logged/harv>24/swb/growing", "M-2", 50))
           }
-        } else if (.eq(s$BEC_ZONE_CODE, "SBS") ||
-          (.eq(s$BEC_ZONE_CODE, "IDF") && identical(s$dry_wet, "wet")) ||
-          (.eq(s$BEC_ZONE_CODE, "ICH") && identical(s$dry_wet, "dry"))) {
+        } else if (
+          .eq(s$BEC_ZONE_CODE, "SBS") ||
+            (.eq(s$BEC_ZONE_CODE, "IDF") && identical(s$dry_wet, "wet")) ||
+            (.eq(s$BEC_ZONE_CODE, "ICH") && identical(s$dry_wet, "dry"))
+        ) {
           return(.ft("NV/logged/harv>24/sbs-or-idfwet-or-ichdry", "C-3"))
-        } else if (.in_set(s$BEC_ZONE_CODE, c("SBPS", "MS", "ESSF")) ||
-          (.in_set(s$BEC_ZONE_CODE, c("IDF", "CDF")) && identical(s$dry_wet, "dry"))) {
+        } else if (
+          .in_set(s$BEC_ZONE_CODE, c("SBPS", "MS", "ESSF")) ||
+            (.in_set(s$BEC_ZONE_CODE, c("IDF", "CDF")) && identical(s$dry_wet, "dry"))
+        ) {
           return(.ft("NV/logged/harv>24/montane", "C-7"))
         } else if (.in_set(s$BEC_ZONE_CODE, c("PP", "BG"))) {
           if (dormant) {

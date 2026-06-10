@@ -7,8 +7,10 @@
 test_that("R port matches the Python reference output", {
   input_path <- test_path("fixtures", "vri_sample.csv")
   golden_path <- test_path("fixtures", "golden_output.csv")
-  skip_if_not(file.exists(golden_path),
-              "golden_output.csv not generated; run data-raw/generate_golden.py")
+  skip_if_not(
+    file.exists(golden_path),
+    "golden_output.csv not generated; run data-raw/generate_golden.py"
+  )
 
   input <- utils::read.csv(input_path, colClasses = "character", na.strings = "")
   golden <- utils::read.csv(golden_path, colClasses = "character", na.strings = "")
