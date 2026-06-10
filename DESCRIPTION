@@ -1,0 +1,26 @@
+Package: bcwsft
+Title: BC Wildfire Service Fuel Typing Algorithm (R Port)
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Gregory A.", "Greene", email = "map.n.trowel@gmail.com",
+           role = c("aut", "cph"),
+           comment = "Author of the original Python implementation (bcwft2018)"),
+    person("Alex M.", "Chubaty", email = "achubaty@for-cast.ca",
+           role = c("aut", "cre"),
+           comment = "R port"))
+Description: An R port of the British Columbia Wildfire Service fuel-typing
+    algorithm, which assigns Canadian Forest Fire Behaviour Prediction (FBP)
+    System fuel types to Vegetation Resources Inventory (VRI) polygons using the
+    expert decision tree of Perrakis, Eade and Hicks (2018). This package is a
+    faithful translation of Gregory A. Greene's Python implementation
+    ('bcwft2018', <https://github.com/gagreene/BC_CFFBPS_FuelTyping_Tool>), with
+    no ArcGIS / arcpy dependency, intended as an independent cross-check on
+    map-derived fuel-type products.
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+URL: https://github.com/gagreene/BC_CFFBPS_FuelTyping_Tool
