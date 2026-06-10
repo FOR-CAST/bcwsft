@@ -16,6 +16,22 @@ test_that("R port matches the Python reference output", {
   golden <- utils::read.csv(golden_path, colClasses = "character", na.strings = "")
   current_year <- as.integer(golden$current_year[1])
 
+  ## Numeric VRI attributes arrive as numeric from sf/bcdata; coerce here since
+  ## read.csv(colClasses = "character") makes everything a string.
+  numeric_cols <- c(
+    "CROWN_CLOSURE",
+    "PROJ_HEIGHT_1",
+    "PROJ_AGE_1",
+    "VRI_LIVE_STEMS_PER_HA",
+    "VRI_DEAD_STEMS_PER_HA",
+    "STAND_PERCENTAGE_DEAD",
+    "NON_PRODUCTIVE_CD",
+    paste0("SPECIES_PCT_", 1:6)
+  )
+  for (col in intersect(numeric_cols, names(input))) {
+    input[[col]] <- suppressWarnings(as.numeric(input[[col]]))
+  }
+
   ## Run the R port row-wise, honouring each row's `season`.
   got <- lapply(seq_len(nrow(input)), function(i) {
     rec <- as.list(input[i, , drop = FALSE])

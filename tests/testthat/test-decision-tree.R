@@ -110,28 +110,59 @@ test_that("unlogged unburned shrub with a leading species", {
   expect_identical(bcwsft_fuel_type_one(shrub, "growing", cy)$fuel_type, "D-2")
 })
 
-test_that("vegetated sites raise a clear not-yet-ported error", {
-  veg <- rec0(
+test_that("vegetated forested pure stands match the reference", {
+  ## expected values confirmed against the reference Python tool (bcwft2018)
+  cedar <- rec0(
     BCLCS_LEVEL_1 = "V",
     BCLCS_LEVEL_2 = "T",
+    BCLCS_LEVEL_5 = "DE",
     BEC_ZONE_CODE = "ICH",
     BEC_SUBZONE = "mc",
     SPECIES_CD_1 = "CW",
-    SPECIES_PCT_1 = 100
+    SPECIES_PCT_1 = 100,
+    PROJ_HEIGHT_1 = 30,
+    PROJ_AGE_1 = 200,
+    CROWN_CLOSURE = 70,
+    VRI_LIVE_STEMS_PER_HA = 600,
+    VRI_DEAD_STEMS_PER_HA = 0,
+    STAND_PERCENTAGE_DEAD = 0
   )
-  expect_snapshot(bcwsft_fuel_type_one(veg, "growing", cy), error = TRUE)
+  expect_identical(bcwsft_fuel_type_one(cedar, "growing", cy)$fuel_type, "C-5")
+
+  lodgepole <- rec0(
+    BCLCS_LEVEL_1 = "V",
+    BCLCS_LEVEL_2 = "T",
+    BCLCS_LEVEL_5 = "DE",
+    BEC_ZONE_CODE = "ICH",
+    BEC_SUBZONE = "mc",
+    SPECIES_CD_1 = "PL",
+    SPECIES_PCT_1 = 100,
+    PROJ_HEIGHT_1 = 8,
+    PROJ_AGE_1 = 30,
+    CROWN_CLOSURE = 60,
+    VRI_LIVE_STEMS_PER_HA = 2000,
+    VRI_DEAD_STEMS_PER_HA = 0,
+    STAND_PERCENTAGE_DEAD = 0
+  )
+  expect_identical(bcwsft_fuel_type_one(lodgepole, "growing", cy)$fuel_type, "C-3")
 })
 
-test_that("bcwsft_fuel_type(on_error = 'na') tolerates unported branches", {
+test_that("bcwsft_fuel_type(on_error = 'na') returns NA for a failing row", {
+  ## row 1: complete non-veg logged stand; row 2: vegetated forested stand missing
+  ## PROJ_HEIGHT_1, which the tree needs -> errors -> NA under on_error = "na".
   df <- data.frame(
     BCLCS_LEVEL_1 = c("N", "V"),
+    BCLCS_LEVEL_2 = c(NA, "T"),
+    BCLCS_LEVEL_5 = c(NA, "DE"),
     HARVEST_DATE = c("2020-06-01", NA),
     COAST_INTERIOR_CD = c("C", NA),
     BEC_ZONE_CODE = c("CWH", "ICH"),
     BEC_SUBZONE = c("vm", "mc"),
+    SPECIES_CD_1 = c(NA, "PL"),
+    SPECIES_PCT_1 = c(NA, 100),
     stringsAsFactors = FALSE
   )
   out <- suppressWarnings(bcwsft_fuel_type(df, "growing", cy, on_error = "na"))
   expect_identical(out$fuel_type[1], "S-3")
-  expect_identical(out$fuel_type[2], NA_character_) # vegetated -> NA, not an error
+  expect_identical(out$fuel_type[2], NA_character_)
 })

@@ -8,8 +8,9 @@ bcwsft_decision_tree(s)
 }
 \arguments{
 \item{s}{named list of VRI attributes augmented with derived predicates
-(\code{is_vegetated}, \code{is_logged}, \code{is_burned}, \code{harv_lag}, \code{dist_lag},
-\code{dry_wet}, \code{season}, ...), as assembled by \code{\link[=bcwsft_fuel_type_one]{bcwsft_fuel_type_one()}}.}
+(\code{is_vegetated}, \code{is_forested}, \code{is_logged}, \code{is_burned}, \code{harv_lag},
+\code{dist_lag}, \code{pct_cnfr}, \code{dry_wet}, \code{stocking}, \code{season}), as assembled by
+\code{\link[=bcwsft_fuel_type_one]{bcwsft_fuel_type_one()}}.}
 }
 \value{
 a list with \code{branch}, \code{fuel_type}, and \code{ft_modifier}.

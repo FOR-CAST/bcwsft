@@ -19,17 +19,20 @@ package (e.g. via `bcwsft::bcwsft_fuel_type()`) without changing their own
 license, provided they do not copy this package's source into their tree. See
 `LICENSE.md`.
 
-## Status: scaffold (port in progress)
+## Status
 
 | Component | State |
 |---|---|
-| Input validation, constants (species/BEC lists) | ported |
-| Predicates (`is_vegetated`, `is_logged`, `harv_lag`, `pct_conifer`, ...) | ported |
-| Decision tree: **non-vegetated** site branch (`bcwft2018.py` ~L402-487) | ported |
-| Decision tree: vegetated-site branch (~L488-1859) | **TODO** -- raises `not yet ported` |
+| Input validation, constants (species/BEC lists) | ported (hand) |
+| Predicates (`is_vegetated`, `is_logged`, `harv_lag`, `pct_conifer`, ...) | ported (hand) |
+| Decision tree: **non-vegetated** branch (`bcwft2018.py` ~L402-487) | ported |
+| Decision tree: **vegetated** branch (~L488-1859) | ported (transpiled) |
 
-Unported branches raise a clear error (or return `NA` with `on_error = "na"`), so
-partial coverage is explicit rather than silently wrong.
+The decision tree (`R/decision-tree.R`) is generated from the reference Python by
+`data-raw/transpile.py` and validated against the reference output across
+thousands of random VRI rows (0 mismatches; see `data-raw/`). Rows whose required
+inventory attributes are missing error out, matching the reference; use
+`on_error = "na"` to get `NA` for such rows instead.
 
 ## Usage
 

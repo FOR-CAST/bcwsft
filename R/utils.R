@@ -17,6 +17,11 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
+## NA-safe scalar equality used by the transpiled decision tree, mirroring
+## Python's None comparisons: `None == x` is FALSE, `None != x` is TRUE.
+`%eq%` <- function(a, b) isTRUE(a == b)
+`%ne%` <- function(a, b) !isTRUE(a == b)
+
 .this_year <- function() as.integer(format(Sys.Date(), "%Y"))
 
 ## Extract a 4-digit calendar year from a Date, POSIXt, or string.
