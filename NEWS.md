@@ -1,4 +1,4 @@
-# bcwsft (development version)
+# bcwsft 0.0.1
 
 * Complete R port of the BC Wildfire Service fuel-typing algorithm (Greene's
   `bcwft2018.py`; Perrakis et al. 2018), arcpy-free. The full decision tree

@@ -1,6 +1,6 @@
 Package: bcwsft
 Title: BC Wildfire Service Fuel Typing Algorithm (R Port)
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: c(
     person("Gregory A.", "Greene", email = "map.n.trowel@gmail.com",
            role = c("aut", "cph"),
@@ -22,5 +22,6 @@ Roxygen: list(markdown = TRUE)
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/gagreene/BC_CFFBPS_FuelTyping_Tool
+URL: https://for-cast.github.io/bcwsft/, https://github.com/FOR-CAST/bcwsft
+BugReports: https://github.com/FOR-CAST/bcwsft/issues
 Config/roxygen2/version: 8.0.0
